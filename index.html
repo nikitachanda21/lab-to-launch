@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab to Launch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, peer-to-peer guide from a physicist who writes
+   IDEA: an orbital system; every path circles one goal
+   PICTURE: Nikita's orbit logo, large, planets moving slowly
+   COLOUR and TYPE: Deep Space Blue base, Cherry Rose actions, Ash Grey fields; Lora + Source Sans 3
+   LAYOUT: sticky nav, hash-routed pages: home, roadmap, research, stories, resources */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#121d27);--ink:light-dark(#1C3041,#e8eee7);--soft:light-dark(#EEF3ED,#1a2733);
+--line:light-dark(#e1e8e0,#2a3a48);--mute:light-dark(#4d6070,#a9b8c4);--card:light-dark(#ffffff,#172431);
+--rose:#A4303F;--roseInk:light-dark(#A4303F,#e8798a);--mauve:#A188A6;--chest:#C08552;--ash:#CADBC8;
+--blue:#1C3041;--mauveInk:light-dark(#7a5f80,#c9b3cd);--chestInk:light-dark(#93602f,#e0ad7c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Source Sans 3",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Lora,Georgia,serif;font-weight:700;line-height:1.12;text-wrap:balance;margin:0}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px)}
+.band{padding:clamp(32px,5vw,72px) 0}
+.soft{background:var(--soft)}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Lora,serif;font-weight:700;font-size:21px;text-decoration:none}
+.links{display:flex;flex-wrap:wrap;gap:4px 22px}
+.links a{text-decoration:none;font-weight:600;font-size:16px;padding:10px 0;border-bottom:2px solid transparent}
+.links a[aria-current=page]{color:var(--roseInk);border-color:var(--roseInk)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--roseInk);outline-offset:3px;border-radius:4px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:8px;font-weight:700;text-decoration:none;font-size:17px;border:2px solid transparent;cursor:pointer;font-family:inherit}
+.primary{background:var(--rose);color:#fff}.primary:hover{background:#8a2634}
+.ghost{border-color:var(--ink);color:var(--ink);background:none}
+.kicker{font-size:14px;font-weight:700;color:var(--roseInk);margin:0 0 10px}
+.lead{font-size:19px;color:var(--mute);max-width:640px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero h1{font-size:clamp(38px,5.6vw,60px)}.hero h1 em{color:var(--roseInk);font-style:italic}
+.hero .lead{margin:22px 0 30px}.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.orbit{width:100%;max-width:440px;aspect-ratio:1;justify-self:center}
+@media(prefers-reduced-motion:no-preference){.spin{transform-origin:200px 200px;animation:sp var(--d) linear infinite}@keyframes sp{to{transform:rotate(360deg)}}}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px}
+.card h3{font-size:25px;margin:4px 0 10px}
+.tag{font-size:14px;font-weight:700}
+.list{list-style:none;padding:0;margin:16px 0 0}.list li{padding:9px 0;border-top:1px solid var(--line);font-weight:600}
+.feature{display:flex;gap:28px;align-items:center;background:var(--blue);color:#fff;border-radius:14px;padding:32px}
+.feature p{color:#d5e1d4;margin:6px 0 0}.feature .btn{margin-left:auto;background:#fff;color:var(--blue);flex:none}
+.av{width:88px;height:88px;border-radius:50%;background:var(--ash);color:var(--blue);display:grid;place-items:center;font:700 30px Lora,serif;flex:none}
+.pagehead h1{font-size:clamp(34px,4.6vw,50px);margin-bottom:12px}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px;font-weight:600;font-size:15px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.chain{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:36px;align-items:start}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps:before{content:"";position:absolute;left:23px;top:24px;bottom:24px;border-left:2px dashed var(--ash)}
+.steps button{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:48px;padding:6px 10px;background:none;border:2px solid transparent;border-radius:10px;color:var(--ink);font:600 17px "Source Sans 3",sans-serif;text-align:left;cursor:pointer}
+.steps button:hover{background:var(--soft)}
+.steps button[aria-selected=true]{border-color:var(--roseInk);background:var(--card)}
+.num{width:30px;height:30px;border-radius:50%;color:#fff;font-size:14px;font-weight:700;display:grid;place-items:center;flex:none}
+.panel h2{font-size:clamp(28px,3vw,38px);margin:6px 0 14px}
+.quote{margin:24px 0;padding:20px 24px;border-left:4px solid var(--rose);background:var(--soft);font:italic 600 20px/1.5 Lora,serif}
+.quote small{display:block;margin-top:8px;font:600 14px "Source Sans 3",sans-serif;color:var(--mute)}
+.box h4{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--chestInk)}
+.box p{margin:0;font-size:16px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.pager button{background:none;border:0;font:700 16px "Source Sans 3",sans-serif;color:var(--roseInk);cursor:pointer;min-height:44px}
+.pager button:disabled{color:var(--mute);opacity:.5;cursor:default}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:28px;padding:28px 0;border-top:1px solid var(--line)}
+.when{font:700 22px Lora,serif;color:var(--mauveInk)}
+.timeline ul{margin:8px 0 0;padding-left:20px}
+.timeline li p{margin:0}
+.profile{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:40px;align-items:start}
+.av img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.profile aside .av{width:120px;height:120px;font-size:40px;margin-bottom:16px}
+.profile dl{margin:0}.profile dt{font-weight:700;font-size:14px;color:var(--mute);margin-top:14px}.profile dd{margin:0}
+.qa h3{font-size:22px;margin:30px 0 8px}
+.res a{font-weight:700;color:var(--roseInk)}
+.note{font-size:14px;color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:15px;color:var(--mute)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+[hidden]{display:none!important}
+@media(max-width:860px){.hero,.chain,.profile,.timeline li{grid-template-columns:minmax(0,1fr)}.grid3{grid-template-columns:minmax(0,1fr)}.orbit{max-width:300px}}
+@media(max-width:600px){.grid2{grid-template-columns:minmax(0,1fr)}.feature{flex-direction:column;align-items:flex-start}.feature .btn{margin-left:0}.links{gap:2px 16px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#home" aria-label="Lab to Launch home">
+    <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#A188A6"/><circle cx="20" cy="20" r="13" fill="none" stroke="#C08552"/><circle cx="20" cy="20" r="8" fill="none" stroke="currentColor"/><circle cx="20" cy="20" r="4" fill="#A4303F"/><circle cx="33" cy="8" r="2" fill="#A188A6"/></svg>
+    Lab to Launch</a>
+  <div class="links">
+    <a href="#roadmap">PhD Roadmap</a><a href="#research">Research to Product</a><a href="#stories">Stories</a><a href="#resources">Resources</a>
+  </div>
+</div></nav>
+
+<main>
+<!-- HOME -->
+<section id="home" data-page>
+  <div class="band soft"><div class="wrap hero">
+    <div>
+      <p class="kicker">For undergraduates aiming at the quantum industry</p>
+      <h1>Your PhD can be a <em>launchpad</em>, not just a lab.</h1>
+      <p class="lead">A free guide to preparing for an industry-focused PhD, and to how quantum research becomes a product, told through the people who made the leap.</p>
+      <div class="ctas"><a class="btn primary" href="#roadmap">Start the roadmap</a><a class="btn ghost" href="#stories">Read the stories</a></div>
+    </div>
+    <svg class="orbit" viewBox="0 0 400 400" role="img" aria-label="Orbit logo: paths circling one goal">
+      <circle cx="200" cy="200" r="188" fill="none" stroke="#A188A6" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="152" fill="none" stroke="#C08552" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="116" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="200" cy="200" r="80" fill="none" stroke="#A4303F" stroke-width="1"/>
+      <circle cx="200" cy="200" r="40" fill="#A4303F"/>
+      <g class="spin" style="--d:60s"><circle cx="388" cy="200" r="6" fill="#A188A6"/></g>
+      <g class="spin" style="--d:44s"><circle cx="48" cy="200" r="6" fill="#C08552"/></g>
+      <g class="spin" style="--d:30s"><circle cx="200" cy="316" r="5" fill="currentColor"/></g>
+      <g class="spin" style="--d:18s"><circle cx="280" cy="200" r="5" fill="#A4303F"/></g>
+    </svg>
+  </div></div>
+  <div class="band"><div class="wrap grid2">
+    <div class="card"><span class="tag" style="color:var(--mauveInk)">Track 1</span><h3>Preparing for a PhD</h3>
+      <p>A year-by-year roadmap for building a strong application with an industry career in mind.</p>
+      <ul class="list"><li>Years 1–2 · Grades and your first research position</li><li>Year 3 · Choosing programs and advisors</li><li>Summer before senior year · Start applications early</li></ul>
+      <p><a class="btn ghost" href="#roadmap" style="margin-top:12px">Open the roadmap</a></p></div>
+    <div class="card"><span class="tag" style="color:var(--chestInk)">Track 2</span><h3>From Research to Product</h3>
+      <p>An interactive map of the ten steps that turn a lab result into a company and a product.</p>
+      <ul class="list"><li>Know the field and spot the opportunity</li><li>License the IP and found the startup</li><li>Make it work every time, not just once</li></ul>
+      <p><a class="btn ghost" href="#research" style="margin-top:12px">Explore the ten steps</a></p></div>
+  </div></div>
+  <div class="wrap" style="padding-bottom:64px">
+    <div class="feature"><div class="av">?</div><div><span class="tag" style="color:var(--ash)">Featured story</span>
+      <h3 style="font-size:26px;margin-top:4px">First founder profile coming soon</h3>
+      <p>Real stories from people who turned a PhD into a quantum industry career will appear here once each person has reviewed their profile.</p></div>
+      <a class="btn" href="#stories">See stories</a></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" data-page hidden>
+  <div class="band soft pagehead"><div class="wrap">
+    <p class="kicker">Track 1 · Preparing for a PhD</p>
+    <h1>A year-by-year roadmap</h1>
+    <p class="lead">What to focus on at each stage of undergrad if you want a PhD to lead into the quantum industry. Timelines here follow the US system.</p>
+  </div></div>
+  <div class="band"><div class="wrap"><ol class="timeline">
+    <li><div class="when">Years 1–2</div><div><h3>Build your foundation</h3><ul>
+      <li>Treat grades as an investment. GPA shapes access to internships and fellowships, and founders we spoke with wish they had taken it more seriously.</li>
+      <li>Join a research group, even in a small role, and learn to document your work carefully.</li>
+      <li>Go to talks and club events in quantum to learn what the field looks like outside class.</li></ul></div></li>
+    <li><div class="when">Year 3</div><div><h3>Do research well and know the field</h3><ul>
+      <li>Bring something real to every meeting with your mentor. Reliability builds trust faster than personality.</li>
+      <li>Follow quantum companies and notice what problems they are trying to solve.</li>
+      <li>Start a list of programs and advisors with strong ties to industry, startups or national labs.</li></ul></div></li>
+    <li><div class="when">Summer before senior year</div><div><h3>Start applications early</h3><ul>
+      <li>Begin at the start of the summer. Once classes start, deadlines arrive faster than you expect.</li>
+      <li>Research each program carefully, and prepare fellowship applications such as the NSF GRFP.</li>
+      <li>Ask for recommendation letters from people who have seen your research up close.</li></ul></div></li>
+    <li><div class="when">Senior year and after</div><div><h3>Choose deliberately</h3><ul>
+      <li>In the US, PhD students are usually paid, while master's students usually pay tuition. Factor that into your choice.</li>
+      <li>Not sure yet? A gap year working in a lab or company is a real option, not a detour.</li></ul></div></li>
+  </ol></div></div>
+</section>
+
+<!-- RESEARCH TO PRODUCT -->
+<section id="research" data-page hidden>
+  <div class="band soft pagehead"><div class="wrap">
+    <p class="kicker">Track 2 · From Research to Product</p>
+    <h1>How a lab result becomes a company</h1>
+    <p class="lead">Ten steps, from a grant-funded experiment to a product customers depend on. Select a step to see what happens and what you can do about it now.</p>
+    <div class="legend"><span><i class="dot" style="background:var(--mauve)"></i>In the lab (PhD)</span><span><i class="dot" style="background:var(--chest)"></i>In the company</span></div>
+  </div></div>
+  <div class="band"><div class="wrap chain">
+    <ol class="steps" id="steps" role="tablist" aria-label="Ten steps"></ol>
+    <div class="card panel" id="panel" role="tabpanel" aria-live="polite"></div>
+  </div></div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" data-page hidden>
+  <div class="band soft pagehead"><div class="wrap">
+    <p class="kicker">Stories</p>
+    <h1>People who made the leap</h1>
+    <p class="lead">First-person paths from PhD to industry. Each profile comes from an interview and is reviewed by the person before it is published.</p>
+  </div></div>
+  <div class="band"><div class="wrap"><div class="card"><h3 style="font-size:22px">Stories coming soon</h3><p style="margin:0">The first profiles are being written and reviewed now. New profiles are added after each speaker talk. Know someone who turned a PhD into an industry career? They can share their path.</p></div></div></div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources" data-page hidden>
+  <div class="band soft pagehead"><div class="wrap">
+    <p class="kicker">Resources</p><h1>Where to learn more</h1>
+    <p class="lead">Trusted starting points for careers, funding and commercialization.</p>
+  </div></div>
+  <div class="band"><div class="wrap grid3 res">
+    <div class="card"><span class="tag" style="color:var(--mauveInk)">Careers</span><h3 style="font-size:21px">Career guides</h3>
+      <p><a href="https://www.aps.org/careers/guidance">APS Careers Guidebook</a><br>Physics careers beyond academia.</p>
+      <p><a href="https://chicagoquantum.org/q-ready">Q-Ready, Chicago Quantum Exchange</a><br>Quantum careers and connections.</p>
+      <p><a href="https://ocs.yale.edu/resources/quantum-careers-worldwide/">Quantum Careers Worldwide</a><br>Roles across the US, UK, EU and Asia.</p></div>
+    <div class="card"><span class="tag" style="color:var(--mauveInk)">Funding</span><h3 style="font-size:21px">Paying for a PhD</h3>
+      <p><a href="https://www.nsf.gov/funding/initiatives/grfp">NSF Graduate Research Fellowship</a><br>Three years of support for graduate research.</p>
+      <p><a href="https://www.aip.org/statistics/physics-doctorates-initial-employment">AIP: where physics PhDs work</a><br>Data on first jobs after a PhD.</p></div>
+    <div class="card"><span class="tag" style="color:var(--chestInk)">Startups</span><h3 style="font-size:21px">Research to product</h3>
+      <p><a href="https://www.nsf.gov/funding/initiatives/i-corps/about-teams">NSF I-Corps Teams</a><br>Training to take lab technology to market.</p>
+      <p><a href="https://arxiv.org/html/2601.04292v1">Profiles of Roles in the Quantum Industry</a><br>What quantum jobs involve day to day.</p></div>
+  </div></div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Lab to Launch · A student-built guide by Nikita Chanda, UC Santa Barbara</span><span>Prototype for WRIT 20 · 2026</span></div></footer>
+
+<script>
+{
+const steps=[
+ ["Research funding","lab","Government grants pay the university to run the lab, buy equipment and support PhD students.","Funding decides which questions labs can pursue, and it ends when the grant does.","Learn who funds the labs you are interested in, and read their recent project summaries."],
+ ["PhD research","lab","A student designs and tests a new device, such as a single-photon source, until it works once. That proof of concept is enough to publish.","Long cycles of building, measuring and fixing, plus papers and talks.","Join a research group and practise careful lab documentation."],
+ ["Know the field","lab","By following the industry, the researcher notices which companies need a better version of their device. That gap is the business opportunity.","Reading industry news, talking to companies, and asking who would pay for this.","Follow quantum companies and note the problems they say they are solving."],
+ ["Build relationships","lab","The PI, campus groups like the Quantum Foundry, and collaborators bring a co-founder, funding leads and introductions.","Consistent, reliable work that makes people want to bet on you.","Bring something real to every mentor meeting, and go to talks and events."],
+ ["License the IP","lab","The university owns inventions made in its labs, so the founders license the technology and pay royalties in return.","Working with the university's tech transfer office on terms and patents.","Find your university's tech transfer office and read how it supports student startups."],
+ ["Found the startup","co","The PhD student and PI form a company and commit to turning the research into a product.","Deciding roles, ownership and the first product to build.","Notice which mentors and peers you would trust as co-founders."],
+ ["Raise funding","co","Investors give money in exchange for part ownership (equity). This pays for staff, equipment and R&D.","Pitching to investors and answering hard questions about the market.","Practise explaining your research to people who are not scientists."],
+ ["R&D to reliability","co","The team turns a one-time result into a device that works the same way every time. This is often the hardest and longest step.","Repeating the same fabrication process, measuring every device, and improving the steps that fail most.","Repeat experiments until you understand why results vary."],
+ ["Product","co","A finished, packaged device that customers can plug into their own systems. For Qudara, an on-chip light engine.","Packaging, testing, documentation and support.","Take a class or project where you build something others will use."],
+ ["Customers","co","Companies building quantum networks, secure communication and quantum computers buy the product, and their feedback goes back into R&D.","Listening to customers and improving the product over time.","Talk to people in industry about what they wish their tools did better."]];
+const quote={7:"Research only needs a proof of concept. A company has to make it reliable enough for commercial use, every time."};
+const ol=document.getElementById('steps'),panel=document.getElementById('panel');
+let cur=7;
+ol.innerHTML=steps.map((s,i)=>`<li><button role="tab" id="st${i}" data-i="${i}"><span class="num" style="background:${s[1]=='lab'?'var(--mauve)':'var(--chest)'}">${i+1}</span>${s[0].replace('&','&amp;')}</button></li>`).join('');
+function show(i){
+  cur=i;
+  ol.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-selected',k==i));
+  const s=steps[i],where=s[1]=='lab'?'In the lab':'In the company',esc=t=>t.replace(/&/g,'&amp;');
+  panel.innerHTML=`<span class="tag" style="color:${s[1]=='lab'?'var(--mauveInk)':'var(--chestInk)'}">Step ${i+1} of 10 · ${where}</span>
+  <h2>${esc(s[0])}</h2><p style="font-size:19px;margin:0">${esc(s[2])}</p>
+  ${quote[i]?`<div class="quote">${quote[i]}<small>Paraphrased from an interview with a quantum startup co-founder</small></div>`:''}
+  <div class="grid2" style="margin-top:24px"><div class="card box" style="padding:20px"><h4>What this looks like</h4><p>${esc(s[3])}</p></div>
+  <div class="card box" style="padding:20px"><h4>What you can do now</h4><p>${esc(s[4])}</p></div></div>
+  <div class="pager"><button data-go="${i-1}" ${i==0?'disabled':''}>← ${i>0?esc(steps[i-1][0]):'Start'}</button><button data-go="${i+1}" ${i==9?'disabled':''}>${i<9?esc(steps[i+1][0]):'End'} →</button></div>`;
+}
+ol.addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(+b.dataset.i)});
+panel.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)show(+b.dataset.go)});
+ol.addEventListener('keydown',e=>{if(e.key=='ArrowDown'||e.key=='ArrowUp'){e.preventDefault();const n=Math.max(0,Math.min(9,cur+(e.key=='ArrowDown'?1:-1)));show(n);document.getElementById('st'+n).focus()}});
+show(7);
+const pages=['home','roadmap','research','stories','resources'];
+function route(){
+  const h=location.hash.slice(1),p=pages.includes(h)?h:'home';
+  document.querySelectorAll('[data-page]').forEach(s=>s.hidden=s.id!=p);
+  document.querySelectorAll('.links a').forEach(a=>{if(a.getAttribute('href')=='#'+p)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+}
+</script>
+</body>
+</html>
