@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lab to Launch</title>
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -83,7 +84,20 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--roseInk);outline-of
 .res a{font-weight:700;color:var(--roseInk)}
 .note{font-size:14px;color:var(--mute)}
 footer{border-top:1px solid var(--line);padding:32px 0;font-size:15px;color:var(--mute)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footl{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap}
+.footlogo{margin-left:auto;flex:none}.footlogo img{display:block;border-radius:50%;background:#fff}
+.navlogo{border-radius:50%;background:#fff}
+.about{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:48px;align-items:start}
+.portrait{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:1;object-fit:cover;border-radius:16px}
+.logocard{background:#fff;border-radius:16px;border:1px solid var(--line);padding:24px;display:grid;gap:18px;justify-items:center}
+.logocard img{display:block;max-width:100%;height:auto}
+.contact{display:grid;gap:12px;margin-top:24px}
+.contact a{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 18px;border:1px solid var(--line);border-radius:10px;text-decoration:none;font-weight:600;background:var(--card)}
+.contact a span{color:var(--mute);font-weight:400;font-size:15px;margin-left:auto;overflow-wrap:anywhere}
+.sig{display:block;max-width:230px;height:auto;background:#fff;border-radius:8px;padding:4px 10px}
+@media(max-width:860px){.about{grid-template-columns:minmax(0,1fr)}.portrait{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:1;object-fit:cover;border-radius:16px}
+.logocard{max-width:360px}}
 [hidden]{display:none!important}
 @media(max-width:860px){.hero,.chain,.profile,.timeline li{grid-template-columns:minmax(0,1fr)}.grid3{grid-template-columns:minmax(0,1fr)}.orbit{max-width:300px}}
 @media(max-width:600px){.grid2{grid-template-columns:minmax(0,1fr)}.feature{flex-direction:column;align-items:flex-start}.feature .btn{margin-left:0}.links{gap:2px 16px}}
@@ -92,10 +106,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <body>
 <nav><div class="wrap">
   <a class="brand" href="#home" aria-label="Lab to Launch home">
-    <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#A188A6"/><circle cx="20" cy="20" r="13" fill="none" stroke="#C08552"/><circle cx="20" cy="20" r="8" fill="none" stroke="currentColor"/><circle cx="20" cy="20" r="4" fill="#A4303F"/><circle cx="33" cy="8" r="2" fill="#A188A6"/></svg>
+    <img src="logo.png" alt="" width="40" height="40" class="navlogo">
     Lab to Launch</a>
   <div class="links">
-    <a href="#roadmap">PhD Roadmap</a><a href="#research">Research to Product</a><a href="#stories">Stories</a><a href="#resources">Resources</a>
+    <a href="#roadmap">PhD Roadmap</a><a href="#research">Research to Product</a><a href="#stories">Stories</a><a href="#resources">Resources</a><a href="#about">About</a>
   </div>
 </div></nav>
 
@@ -208,9 +222,36 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <p><a href="https://arxiv.org/html/2601.04292v1">Profiles of Roles in the Quantum Industry</a><br>What quantum jobs involve day to day.</p></div>
   </div></div>
 </section>
+
+<!-- ABOUT -->
+<section id="about" data-page hidden>
+  <div class="band soft pagehead"><div class="wrap">
+    <p class="kicker">About the author</p><h1>Why I'm building Lab to Launch</h1>
+    <p class="lead">A physicist who writes, mapping the path from PhD to industry while walking it.</p>
+  </div></div>
+  <div class="band"><div class="wrap about">
+    <div><img class="portrait" src="nikita.jpg" alt="Nikita Chanda" width="320" height="320"></div>
+    <div>
+      <h2 style="font-size:30px;margin-bottom:14px">Nikita Chanda</h2>
+      <p>I'm a physics student at UC Santa Barbara, minoring in professional writing with a focus on science communication. I've done research in quantum photonics at UCSB and at the Centre for Quantum Technologies at the National University of Singapore, and I serve as Marketing Officer for Quantum Computing Santa Barbara and as an officer in Womentum, UCSB's Women in Physics organization.</p>
+      <p>I started Lab to Launch after an informational interview showed me how much of the path from a PhD into the quantum industry depends on conversations most students never get to have. I'm considering that path myself, so this site is my way of learning it while making it easier for others to follow.</p>
+      <p>My logo puts my initials inside orbits, with a quill whose feather is made of sine and cosine waves. Light is a wave, and writing is how I make sense of it.</p>
+      <div class="contact">
+        <a href="mailto:nikitachanda@ucsb.edu">Email <span>nikitachanda@ucsb.edu</span></a>
+        <a href="https://www.linkedin.com/in/nikitachanda">LinkedIn <span>linkedin.com/in/nikitachanda</span></a>
+      </div>
+      <p class="note" style="margin-top:16px">Want to share your own path from PhD to industry? Reach out by email.</p>
+    </div>
+  </div></div>
+</section>
 </main>
 
-<footer><div class="wrap"><span>Lab to Launch · A student-built guide by Nikita Chanda, UC Santa Barbara</span><span>Prototype for WRIT 20 · 2026</span></div></footer>
+<footer><div class="wrap foot">
+  <div class="footl"><span>Lab to Launch · A student-built guide by</span>
+    <a href="#about" aria-label="About Nikita Chanda"><img class="sig" src="signature.png" alt="Nikita Chanda" width="230"></a>
+    <span>UC Santa Barbara · nikitachanda@ucsb.edu</span></div>
+  <a href="#about" class="footlogo" aria-label="About the author"><img src="logo.png" alt="NC logo" width="84" height="84"></a>
+</div></footer>
 
 <script>
 {
@@ -244,7 +285,7 @@ ol.addEventListener('click',e=>{const b=e.target.closest('button');if(b)show(+b.
 panel.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)show(+b.dataset.go)});
 ol.addEventListener('keydown',e=>{if(e.key=='ArrowDown'||e.key=='ArrowUp'){e.preventDefault();const n=Math.max(0,Math.min(9,cur+(e.key=='ArrowDown'?1:-1)));show(n);document.getElementById('st'+n).focus()}});
 show(7);
-const pages=['home','roadmap','research','stories','resources'];
+const pages=['home','roadmap','research','stories','resources','about'];
 function route(){
   const h=location.hash.slice(1),p=pages.includes(h)?h:'home';
   document.querySelectorAll('[data-page]').forEach(s=>s.hidden=s.id!=p);
